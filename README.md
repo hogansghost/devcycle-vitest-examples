@@ -1,54 +1,15 @@
-# React + TypeScript + Vite
+# DevCycle React Vitest RTL testing examples
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A series of examples making use of React Testing Library, Vite, Vitest, JSDOM and Mock Service Worker to demonstrate how you can unit test the DevCycle feature flags with and without needing to mock the entire providers, hooks, etc.
 
-Currently, two official plugins are available:
+Primarily, we mock the network requests to ensure we can test both the on and off states (or multiple different matching states for feature flags with custom values) meaning we can test within the same test each permutation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+One caveat is the seeming need to have the RenderIfDevCycleInitialised function (see codebase) that will trigger a re-render in the test once the provider is initialised so we can test as expected whether an element exists or not, otherwise the test does not seem to update beyond the default value of said feature flag (even with awaiting of elements either being removed or being visible, etc.)
 
-## Expanding the ESLint configuration
+## Technologies
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- [DevCycle](https://www.devcycle.com/).
+- [Vite](https://vite.dev/).
+- [Vitest](https://vitest.dev/).
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/).
+- [Mock Service Worker](https://mswjs.io/).

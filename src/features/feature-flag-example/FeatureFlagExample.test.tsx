@@ -1,4 +1,3 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
@@ -7,21 +6,7 @@ import { DevCycleMockProvider } from "../devcycle-mock-provider/DevCycleMockProv
 import { FeatureFlagExample } from "./FeatureFlagExample";
 
 const Providers = ({ children }: { children: ReactNode }) => (
-  <DevCycleMockProvider>
-    <QueryClientProvider
-      client={
-        new QueryClient({
-          defaultOptions: {
-            queries: {
-              retry: false,
-            },
-          },
-        })
-      }
-    >
-      {children}
-    </QueryClientProvider>
-  </DevCycleMockProvider>
+  <DevCycleMockProvider>{children}</DevCycleMockProvider>
 );
 
 const handlers = [
